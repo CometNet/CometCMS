@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+
+    public function logout() {
+        Auth::logout();
+        return [
+            'code'=>20000
+        ];
+    }
+
     public function login(Request $request) {
         $account = $request->input('username');
         $password = $request->input('password');
@@ -27,9 +35,7 @@ class AuthController extends Controller
         }else{
 
             return [
-                'data'=>[
-                    'token' => 1111
-                ],
+                'message' => '登录失败,账号或密码错误!',
                 'code'=>20001
             ];
         }
@@ -48,6 +54,10 @@ class AuthController extends Controller
     }
 
     public function register(Request $request) {
+        return [
+            'code' => 20001,
+            'message' => '禁止注册!',
+        ];
         $account = $request->input('username');
         $password = $request->input('password');
         $email = $request->input('email');

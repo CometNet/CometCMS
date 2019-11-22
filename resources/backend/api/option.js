@@ -2,31 +2,31 @@ import request from '@/utils/request'
 
 export function fetchList(data) {
   return request({
-    url: '/api/nav/list',
+    url: '/api/option/list',
     method: 'get',
     data
   })
 }
 
-export function addNav(data) {
+export function addOption(data) {
     return request({
-        url: '/api/nav',
+        url: '/api/option',
         method: 'post',
         data
     })
 }
 
-export function updateNav(id,data) {
+export function updateOption(id,data) {
     return request({
-        url: '/api/nav/'+id,
+        url: '/api/option/'+id,
         method: 'put',
         data
     })
 }
 
-export function deleteNav(id) {
+export function deleteOption(id) {
     return request({
-        url: '/api/nav/' + id,
+        url: '/api/option/' + id,
         method: 'delete'
     })
 }

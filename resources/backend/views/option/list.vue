@@ -8,37 +8,31 @@
                 </template>
             </el-table-column>
 
-            <el-table-column width="200px" align="center" label="名称">
+            <el-table-column width="200px" align="center" label="配置名称">
                 <template slot-scope="scope">
-                    <span>{{ scope.row.name }}</span>
+                    <span>{{ scope.row.option_name }}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column width="300px" align="center" label="备注">
+            <el-table-column width="300px" align="center" label="配置描述">
                 <template slot-scope="scope">
-                    <span>{{ scope.row.remark }}</span>
+                    <span>{{ scope.row.description }}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column width="180px" align="center" label="更新时间">
+            <el-table-column width="300px" align="center" label="配置内容">
                 <template slot-scope="scope">
-                    <span>{{ scope.row.updated_at}}</span>
-                </template>
-            </el-table-column>
-
-            <el-table-column width="180px" align="center" label="创建时间">
-                <template slot-scope="scope">
-                    <span>{{ scope.row.created_at}}</span>
+                    <span>{{ scope.row.option_value }}</span>
                 </template>
             </el-table-column>
 
             <el-table-column align="center" label="操作" width="200">
                 <template slot-scope="scope">
                     <el-button type="primary" size="small" icon="el-icon-edit" @click="handleEdit(scope)">
-                        Edit
+                        修改
                     </el-button>
                     <el-button type="danger" size="small" @click="handleDelete(scope)">
-                        Delete
+                        删除
                     </el-button>
                 </template>
             </el-table-column>
@@ -46,36 +40,40 @@
 
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
-        <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Nav':'New Nav'">
+        <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'编辑':'新建'">
             <el-form ref="form" :model="item" label-width="80px">
-                <el-form-item label="name">
-                    <el-input v-model="item.name"></el-input>
+                <el-form-item label="配置名称">
+                    <el-input :disabled="isEdit()" v-model="item.option_name"></el-input>
                 </el-form-item>
-                <el-form-item label="remark">
-                    <el-input v-model="item.remark"></el-input>
+                <el-form-item label="配置描述">
+                    <el-input v-model="item.description"></el-input>
+                </el-form-item>
+                <el-form-item label="配置内容">
+                    <el-input v-model="item.option_value"></el-input>
                 </el-form-item>
             </el-form>
             <div style="text-align:right;">
                 <el-button type="danger" @click="dialogVisible=false">Cancel</el-button>
-                <el-button type="primary" @click="confirmNav">Confirm</el-button>
+                <el-button type="primary" @click="confirmOption">Confirm</el-button>
             </div>
         </el-dialog>
     </div>
 </template>
 
 <script>
-    import { fetchList,addNav,updateNav,deleteNav } from '@/api/navigation'
+    import { fetchList,addOption,updateOption,deleteOption } from '@/api/option'
     import Pagination from '@/components/Pagination'
     import { deepClone } from '@/utils'
 
-    const defaultNav = {
+    const defaultOption = {
         id: '',
-        name: '',
-        remark: ''
+        option_name: '',
+        description: '',
+        option_value: ''
     }
 
     export default {
-        name: 'ArticleList',
+        name: 'OptionList',
         components: { Pagination },
         filters: {
             statusFilter(status) {
@@ -105,6 +103,9 @@
             this.getList()
         },
         methods: {
+            isEdit() {
+                return this.dialogType === 'edit' ? true : false
+            },
             getList() {
                 this.listLoading = true
                 fetchList(this.listQuery).then(response => {
@@ -114,7 +115,7 @@
                 })
             },
             handleAdd() {
-                this.item = Object.assign({}, defaultNav)
+                this.item = Object.assign({}, defaultOption)
                 this.dialogType = 'new'
                 this.dialogVisible = true
             },
@@ -130,7 +131,7 @@
                     type: 'warning'
                 })
                 .then(async() => {
-                    await deleteNav(row.id)
+                    await deleteOption(row.id)
                     this.list.splice($index, 1)
                     this.$message({
                         type: 'success',
@@ -139,11 +140,11 @@
                 })
                 .catch(err => { console.error(err) })
             },
-            async confirmNav() {
+            async confirmOption() {
                 const isEdit = this.dialogType === 'edit'
 
                 if (isEdit) {
-                    await updateNav(this.item.id, this.item)
+                    await updateOption(this.item.id, this.item)
                     for (let index = 0; index < this.list.length; index++) {
                         if (this.list[index].id === this.item.id) {
                             this.list.splice(index, 1, Object.assign({}, this.item))
@@ -151,19 +152,19 @@
                         }
                     }
                 } else {
-                    const { data } = await addNav(this.item)
+                    const { data } = await addOption(this.item)
                     this.item.id = data.id
                     this.list.push(this.item)
                 }
 
-                const { id, remark, name } = this.item
+                const { id, option_value, option_name } = this.item
                 this.dialogVisible = false
                 this.$notify({
                     title: 'Success',
                     dangerouslyUseHTMLString: true,
                     message: `
-                        <div>Nav Name: ${name}</div>
-                        <div>Nav Remark: ${remark}</div>
+                        <div>Nav Name: ${option_name}</div>
+                        <div>Nav Remark: ${option_value}</div>
                       `,
                     type: 'success'
                 })

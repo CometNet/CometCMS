@@ -6,13 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class SlideItem extends Model
 {
+    protected $table = 'slide_item';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'slide_id', 'status', 'list_order', 'title', 'image', 'url', 'description', 'content'
+        'slide_id', 'status', 'list_order', 'title', 'image', 'url', 'description', 'content', 'more'
     ];
 
     /**
@@ -21,6 +22,6 @@ class SlideItem extends Model
      * @var array
      */
     protected $hidden = [
-        'more'
+
     ];
 }

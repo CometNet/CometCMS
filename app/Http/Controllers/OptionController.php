@@ -2,14 +2,14 @@
 
 
 namespace App\Http\Controllers;
-use App\Models\Navigation;
+use App\Models\Option;
 use Illuminate\Http\Request;
 
 
-class NavigationController extends Controller
+class OptionController extends Controller
 {
     public function getAllList(){
-        $list = Navigation::select('id','name')->get();
+        $list = Option::select('id','option_name')->get();
         return [
             'code' => 20000,
             'data' => [
@@ -23,8 +23,9 @@ class NavigationController extends Controller
         $limit = $request->input('limit');
         $page = $page ? ($page - 1) * $limit : 0;
         $limit = $limit ? $limit : 10;
-        $navArr = Navigation::offset($page)->limit($limit)->get();
-        $total = Navigation::count();
+
+        $navArr = Option::offset($page)->limit($limit)->get();
+        $total = Option::count();
         return [
             'code' => 20000,
             'data' => [
@@ -35,11 +36,14 @@ class NavigationController extends Controller
 
     ### RESTFul start
     public function store(Request $request){
-        $name = $request->input('name');
-        $remark = $request->input('remark');
-        $nav = Navigation::create([
-            'name' => $name,
-            'remark' => $remark
+        $option_name = $request->input('option_name');
+        $option_value = $request->input('option_value');
+        $description = $request->input('description');
+
+        $nav = Option::create([
+            'option_name' => $option_name,
+            'option_value' => $option_value,
+            'description' => $description
         ]);
         return [
             'code' => 20000,
@@ -50,11 +54,15 @@ class NavigationController extends Controller
     public function update(Request $request)
     {
         $id = $request->input('id');
-        $name = $request->input('name');
-        $remark = $request->input('remark');
-        $nav = Navigation::find($id);
-        $nav->name = $name;
-        $nav->remark = $remark;
+        $option_name = $request->input('option_name');
+        $option_value = $request->input('option_value');
+        $description = $request->input('description');
+
+        $nav = Option::find($id);
+        $nav->option_name = $option_name;
+        $nav->option_value = $option_value;
+        $nav->description = $description;
+
         if($nav->save()){
             return ['code' => 20000];
         }else{
@@ -64,7 +72,7 @@ class NavigationController extends Controller
 
     public function destroy($id)
     {
-        $nav = Navigation::find($id);
+        $nav = Option::find($id);
         if($nav->delete()){
             return [
                 'code' => 20000
@@ -77,5 +85,4 @@ class NavigationController extends Controller
         }
     }
     ### RESTFul end
-
 }
