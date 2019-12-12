@@ -136,6 +136,34 @@ export const constantRoutes = [
         ]
     },
 
+    {
+        path: '/article',
+        component: Layout,
+        redirect: '/example/table',
+        name: 'Article',
+        meta: { title: '文章管理', icon: 'documentation' },
+        children: [
+            {
+                path: 'create',
+                name: 'Create',
+                component: () => import('@/views/article/create'),
+                meta: { title: '新建', icon: 'documentation' }
+            },
+            {
+                path: 'list',
+                name: 'List',
+                component: () => import('@/views/article/list'),
+                meta: { title: '文章列表', icon: 'documentation' }
+            },
+            {
+                path: 'category',
+                name: 'Category',
+                component: () => import('@/views/article/category'),
+                meta: { title: '分类管理', icon: 'documentation' }
+            },
+        ]
+    },
+
     // {
     //     path: '/example',
     //     component: Layout,

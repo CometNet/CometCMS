@@ -42,3 +42,10 @@ Route::middleware('auth:api')->resource('/option', 'OptionController');
 
 Route::middleware('api')->post('/user/register', 'AuthController@register');
 Route::middleware('api')->post('/upload/file', 'UploadController@uploadFile');
+
+Route::middleware('auth:api')->post('/article/list', 'ArticleController@list');
+Route::middleware('auth:api')->resource('/article', 'ArticleController');
+
+Route::middleware('auth:api')->post('/category/list', 'CategoryController@list');
+Route::middleware('auth:api')->get('/category/getAllList', 'CategoryController@getAllList');
+Route::middleware('auth:api')->resource('/category', 'CategoryController');
