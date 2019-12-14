@@ -7,7 +7,7 @@
             <div class="title">
                 <h1 class="entry-title">{{$post->title}}</h1>
                 <div class="entry-byline">
-                    <span><a href="/{{$post->alias}}.html">December 10, 2019</a></span>
+                    <span><a href="/{{$post->alias}}.html">{{date("M d, Y",strtotime($post->created_at))}}</a></span>
                 </div>
 
                 <div class="entry-meta">
@@ -25,7 +25,8 @@
 
             <div class="entry-content">
                 <p>
-                    {{$post->content}}
+                    <img src="{{$post->thumbnail}}">
+                    {!! $post->content !!}
                 <p>
                     @foreach(json_decode($post->more)->files as $file)
                     <a href="{{$file->uri}}" target="_blank">{{$file->name}}</a>
@@ -47,22 +48,27 @@
             <h2 style="padding-left:40px">Related posts</h2>
             <table width="100%" style="border:none" align="center" cellpadding="2" cellspacing="2">
                 <tbody>
-                    <tr>
-                        <td valign="top" align="center" width="33%" style="background:none"> <div id="pictssidebar">
-                                <div style="height:5px"></div>
-                                <a href="/.html"><img src="/jpg" style="width:200px; height:auto"></a></div>
-                            <div style="height:10px"></div>
-                            <a href="e/.html">title</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td valign="top" align="center" width="33%" style="background:none"> <div id="pictssidebar">
-                                <div style="height:5px"></div>
-                                <a href="/"><img src="/" style="width:200px; height:auto"></a></div>
-                            <div style="height:10px"></div>
-                            <a href="/.html">/</a>
-                        </td>
-                    </tr>
+                    @foreach($related_article as $index => $post)
+                        @if($index < 3)
+                            <tr>
+                                <td valign="top" align="center" width="33%" style="background:none"> <div id="pictssidebar">
+                                        <div style="height:5px"></div>
+                                        <a href="/{{$post->alias}}.html"><img src="{{$post->thumbnail}}" style="width:200px; height:auto"></a></div>
+                                    <div style="height:10px"></div>
+                                    <a href="/{{$post->alias}}.html">{{$post->title}}</a>
+                                </td>
+                            </tr>
+                        @else
+                            <tr>
+                                <td valign="top" align="center" width="33%" style="background:none"> <div id="pictssidebar">
+                                        <div style="height:5px"></div>
+                                        <a href="/{{$post->alias}}.html"><img src="{{$post->thumbnail}}" style="width:200px; height:auto"></a></div>
+                                    <div style="height:10px"></div>
+                                    <a href="/{{$post->alias}}.html">{{$post->title}}</a>
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach
                 </tbody>
             </table>
         </article>

@@ -23,7 +23,7 @@ class UploadController extends Controller
         }
 
         $fileExtension = $file->getClientOriginalExtension();
-        if(! in_array($fileExtension, ['png', 'jpg', 'gif'])) {
+        if(! in_array($fileExtension, ['png', 'jpg', 'gif', 'jpeg'])) {
             return false;
         }
 

@@ -16,7 +16,7 @@ class TagPost extends Model
         'tag_id', 'post_id'
     ];
 
-    public function tags(){
-        return $this->hasMany('App\Models\Tag','tag_id', 'id');
+    public function posts(){
+        return $this->hasMany('App\Models\Post','id', 'post_id');
     }
 }

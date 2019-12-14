@@ -4703,7 +4703,14 @@ var defaultFields = {
       var inputValue = this.inputValue;
 
       if (inputValue) {
-        this.item.tags.push(inputValue);
+        console.log(this.item.tags.indexOf(inputValue));
+
+        if (this.item.tags.indexOf(inputValue) == -1) {
+          this.item.tags.push(inputValue);
+        } else {
+          this.$message.error('[' + inputValue + ']标签已存在!');
+          return false;
+        }
       }
 
       this.inputVisible = false;
@@ -4945,25 +4952,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
-var defaultUser = {
-  id: '',
-  title: '',
-  alias: '',
-  content: '',
-  thumbnail: '',
-  type: '',
-  status: '',
-  tags: [{
-    name: "名称"
-  }],
-  files: [{
-    name: '名字',
-    uri: '122'
-  }],
-  more: ''
-};
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ArticleList',
   components: {
@@ -14366,7 +14376,7 @@ exports.push([module.i, "\n.file[data-v-0534b989] {\n    display: inline-block;\
 
 exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "\n.edit-input[data-v-fd7dd8aa] {\n    padding-right: 100px;\n}\n.cancel-btn[data-v-fd7dd8aa] {\n    position: absolute;\n    right: 15px;\n    top: 10px;\n}\n.avatar-uploader .el-upload[data-v-fd7dd8aa] {\n    border: 1px dashed #d9d9d9;\n    border-radius: 6px;\n    cursor: pointer;\n    position: relative;\n    overflow: hidden;\n}\n.avatar-uploader .el-upload[data-v-fd7dd8aa]:hover {\n    border-color: #409EFF;\n}\n.avatar-uploader-icon[data-v-fd7dd8aa] {\n    font-size: 28px;\n    color: #8c939d;\n    width: 178px;\n    height: 178px;\n    line-height: 178px;\n    text-align: center;\n}\n.avatar[data-v-fd7dd8aa] {\n    width: 178px;\n    height: 178px;\n    display: block;\n}\n", ""]);
+exports.push([module.i, "\n.edit-input[data-v-fd7dd8aa] {\n    padding-right: 100px;\n}\n.cancel-btn[data-v-fd7dd8aa] {\n    position: absolute;\n    right: 15px;\n    top: 10px;\n}\n.avatar-uploader .el-upload[data-v-fd7dd8aa] {\n    border: 1px dashed #d9d9d9;\n    border-radius: 6px;\n    cursor: pointer;\n    position: relative;\n    overflow: hidden;\n}\n.avatar-uploader .el-upload[data-v-fd7dd8aa]:hover {\n    border-color: #409EFF;\n}\n", ""]);
 
 
 /***/ }),
@@ -80277,20 +80287,6 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { width: "100px", align: "center", label: "缩略图" },
-            scopedSlots: _vm._u([
-              {
-                key: "default",
-                fn: function(scope) {
-                  return [
-                    _c("el-avatar", { attrs: { src: scope.row.thumbnail } })
-                  ]
-                }
-              }
-            ])
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
             attrs: { width: "200px", align: "center", label: "标题" },
             scopedSlots: _vm._u([
               {
@@ -80315,12 +80311,74 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { width: "180px", align: "center", label: "内容" },
+            attrs: { width: "100px", align: "center", label: "分类" },
             scopedSlots: _vm._u([
               {
                 key: "default",
                 fn: function(scope) {
-                  return [_c("span", [_vm._v(_vm._s(scope.row.content))])]
+                  return _vm._l(scope.row.categories, function(categorie) {
+                    return _c("el-tag", { key: categorie }, [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(categorie.title) +
+                          "\n                "
+                      )
+                    ])
+                  })
+                }
+              }
+            ])
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { width: "200px", align: "center", label: "标签" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return _vm._l(scope.row.tags, function(tag) {
+                    return _c("el-tag", { key: tag }, [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(tag.name) +
+                          "\n                "
+                      )
+                    ])
+                  })
+                }
+              }
+            ])
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { width: "280px", align: "center", label: "内容" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    _c("div", {
+                      staticStyle: { height: "280px" },
+                      domProps: { innerHTML: _vm._s(scope.row.content) }
+                    })
+                  ]
+                }
+              }
+            ])
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { width: "100px", align: "center", label: "缩略图" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    _c("img", {
+                      staticStyle: { height: "100px" },
+                      attrs: { src: scope.row.thumbnail }
+                    })
+                  ]
                 }
               }
             ])

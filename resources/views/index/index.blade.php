@@ -8,7 +8,7 @@
                 <h2 class="entry-title">
                     <a href="/{{$post->alias}}.html" rel="bookmark">{{$post->title}}</a></h2>
                 <div class="entry-byline">
-                    <span><a href="/{{$post->alias}}.html">{{date("M d, Y",strtotime('Y-m-d H:i:s',$post->created_at))}}</a></span>
+                    <span><a href="/{{$post->alias}}.html">{{date("M d, Y",strtotime($post->created_at))}}</a></span>
                 </div>
 
                 <div class="entry-meta">

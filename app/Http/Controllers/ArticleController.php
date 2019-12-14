@@ -19,14 +19,18 @@ class ArticleController extends Controller
         $page = $page ? ($page - 1) * $limit : 0;
         $limit = $limit ? $limit : 10;
 
-        $navArr = Post::offset($page)->limit($limit)->get();
+        $posts = Post::offset($page)->limit($limit)->get();
+        foreach ($posts as $key=>$post){
+            $posts[$key]['tags'] = $post->tags;
+            $posts[$key]['categories'] = $post->categories;
+        }
 
         $total = Post::count();
         return [
             'code' => 20000,
             'data' => [
                 'total' => $total,
-                'items' => $navArr,
+                'items' => $posts,
             ]];
     }
 

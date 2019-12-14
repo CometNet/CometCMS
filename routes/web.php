@@ -15,6 +15,7 @@ Route::get('/', 'FrontEnd\IndexController@index');
 Route::get('/{alias}.html', 'FrontEnd\IndexController@show');
 Route::get('/categorys/{category}', 'FrontEnd\IndexController@index');
 Route::get('/search/{keyword}', 'FrontEnd\IndexController@search');
+Route::get('/tag/{tag}', 'FrontEnd\IndexController@tag');
 
 Route::get('/wap', function () {
     return view('wap');

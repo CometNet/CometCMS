@@ -10,12 +10,6 @@
                 </template>
             </el-table-column>
 
-            <el-table-column width="100px" align="center" label="缩略图">
-                <template slot-scope="scope">
-                    <el-avatar :src="scope.row.thumbnail"></el-avatar>
-                </template>
-            </el-table-column>
-
             <el-table-column width="200px" align="center" label="标题">
                 <template slot-scope="scope">
                     <span>{{ scope.row.title }}</span>
@@ -28,9 +22,35 @@
                 </template>
             </el-table-column>
 
-            <el-table-column width="180px" align="center" label="内容">
+            <el-table-column width="100px" align="center" label="分类">
                 <template slot-scope="scope">
-                    <span>{{ scope.row.content}}</span>
+                    <el-tag
+                        :key="categorie"
+                        v-for="categorie in scope.row.categories">
+                        {{categorie.title}}
+                    </el-tag>
+                </template>
+            </el-table-column>
+
+            <el-table-column width="200px" align="center" label="标签">
+                <template slot-scope="scope">
+                    <el-tag
+                        :key="tag"
+                        v-for="tag in scope.row.tags">
+                        {{tag.name}}
+                    </el-tag>
+                </template>
+            </el-table-column>
+
+            <el-table-column width="280px" align="center" label="内容">
+                <template slot-scope="scope">
+                    <div style="height: 280px" v-html="scope.row.content"></div>
+                </template>
+            </el-table-column>
+
+            <el-table-column width="100px" align="center" label="缩略图">
+                <template slot-scope="scope">
+                    <img style="height: 100px" :src="scope.row.thumbnail"></img>
                 </template>
             </el-table-column>
 
@@ -53,28 +73,6 @@
 <script>
     import { fetchList,deleteArticle } from '@/api/article'
     import Pagination from '@/components/Pagination'
-
-    const defaultUser = {
-        id: '',
-        title: '',
-        alias: '',
-        content: '',
-        thumbnail: '',
-        type: '',
-        status: '',
-        tags: [
-            {
-                name: "名称"
-            }
-        ],
-        files: [
-            {
-                name : '名字',
-                uri : '122'
-            }
-        ],
-        more: '',
-    }
 
     export default {
         name: 'ArticleList',
@@ -164,18 +162,5 @@
     }
     .avatar-uploader .el-upload:hover {
         border-color: #409EFF;
-    }
-    .avatar-uploader-icon {
-        font-size: 28px;
-        color: #8c939d;
-        width: 178px;
-        height: 178px;
-        line-height: 178px;
-        text-align: center;
-    }
-    .avatar {
-        width: 178px;
-        height: 178px;
-        display: block;
     }
 </style>

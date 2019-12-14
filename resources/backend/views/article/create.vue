@@ -170,18 +170,22 @@
             handleClose(tag) {
                 this.item.tags.splice(this.item.tags.indexOf(tag), 1);
             },
-
             showInput() {
                 this.inputVisible = true;
                 this.$nextTick(_ => {
                     this.$refs.saveTagInput.$refs.input.focus();
                 });
             },
-
             handleInputConfirm() {
                 let inputValue = this.inputValue;
                 if (inputValue) {
-                    this.item.tags.push(inputValue);
+                    console.log(this.item.tags.indexOf(inputValue))
+                    if(this.item.tags.indexOf(inputValue) == -1){
+                        this.item.tags.push(inputValue);
+                    }else{
+                        this.$message.error('[' + inputValue + ']标签已存在!');
+                        return false;
+                    }
                 }
                 this.inputVisible = false;
                 this.inputValue = '';

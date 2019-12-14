@@ -26,11 +26,11 @@ class IndexController extends Controller
             ];
             $posts = Post::where($where)
                 ->join('category_post','posts.id','category_post.post_id')
-                ->orderBy('posts.id', 'DESC')->paginate(1);
+                ->orderBy('posts.id', 'DESC')->paginate(10);
         }
         // 首页
         else{
-            $posts = Post::orderBy('id','desc')->paginate(1);
+            $posts = Post::orderBy('id','desc')->paginate(10);
         }
 
         foreach ($posts as $key=>$post){
@@ -67,6 +67,7 @@ class IndexController extends Controller
         $prev_article = $ps->publishedPrevArticle($post->id);
         $next_article = $ps->publishedNextArticle($post->id);
         $popular_article = $ps->getPopularArticle();
+        $related_article = $ps->getRelatedArticle($post->id, $post['categories'][0]->id);
 
         return view('index.info',[
             'post' => $post,
@@ -74,8 +75,12 @@ class IndexController extends Controller
             'tags' => $tagArr,
             'prev_article' => $prev_article,
             'next_article' => $next_article,
-            'popular_article' => $popular_article
+            'popular_article' => $popular_article,
+            'related_article' => $related_article
         ]);
     }
 
+    public function tag($tag){
+
+    }
 }
