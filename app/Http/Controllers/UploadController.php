@@ -12,9 +12,18 @@ class UploadController extends Controller
         $file = $request->file('file');
         $fileName = $this->upload($file);
         if ($fileName){
+            return [
+                'code' => 20000,
+                'data' => [
+                    'location' => $fileName
+                ]
+            ];
             return $fileName;
         }
-        return '上传失败';
+        return [
+            'code' => 20001,
+            'message' => '上传失败!'
+        ];
     }
 
     public function upload($file, $disk='public') {

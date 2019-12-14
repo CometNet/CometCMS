@@ -16,6 +16,7 @@ import editorImage from './components/EditorImage'
 import plugins from './plugins'
 import toolbar from './toolbar'
 import load from './dynamicLoadScript'
+import {upload} from '@/api/upload'
 
 // why use this cdn, detail see https://github.com/PanJiaChen/tinymce-all-in-one
 const tinymceCDN = 'tinymce.min.js'
@@ -148,6 +149,13 @@ export default {
           editor.on('FullscreenStateChanged', (e) => {
             _this.fullscreen = e.state
           })
+        },
+        async images_upload_handler(blobInfo, success, failure){
+            const res = await upload(blobInfo.blob(),blobInfo.filename());
+            if(res.code != 20000){
+                failure(res.message);
+            }
+            success(res.data.location);
         }
         // 整合七牛上传
         // images_dataimg_filter(img) {

@@ -228,8 +228,11 @@
                 })
             },
             handleAvatarSuccess(res, file) {
-                this.item.thumbnail = res;
-                // this.item.thumbnail = URL.createObjectURL(file.raw);
+                if(res.code != 20000){
+                    this.$message.error(res.message);
+                    return;
+                }
+                this.item.thumbnail = res.data.location;
             },
             beforeAvatarUpload(file) {
                 if(validImage(file)){

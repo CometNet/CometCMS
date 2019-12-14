@@ -3351,12 +3351,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_web_dom_iterable__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_iterable__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var core_js_modules_es6_array_for_each__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es6.array.for-each */ "./node_modules/core-js/modules/es6.array.for-each.js");
 /* harmony import */ var core_js_modules_es6_array_for_each__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es6_array_for_each__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_modules_es6_number_constructor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es6.number.constructor */ "./node_modules/core-js/modules/es6.number.constructor.js");
-/* harmony import */ var core_js_modules_es6_number_constructor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es6_number_constructor__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _components_EditorImage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/EditorImage */ "./resources/backend/components/Tinymce/components/EditorImage.vue");
-/* harmony import */ var _plugins__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./plugins */ "./resources/backend/components/Tinymce/plugins.js");
-/* harmony import */ var _toolbar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./toolbar */ "./resources/backend/components/Tinymce/toolbar.js");
-/* harmony import */ var _dynamicLoadScript__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./dynamicLoadScript */ "./resources/backend/components/Tinymce/dynamicLoadScript.js");
+/* harmony import */ var _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime-corejs2/regenerator */ "./node_modules/@babel/runtime-corejs2/regenerator/index.js");
+/* harmony import */ var _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _Applications_MAMP_wwwroot_CometCMS_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./node_modules/@babel/runtime-corejs2/helpers/esm/asyncToGenerator */ "./node_modules/@babel/runtime-corejs2/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var core_js_modules_es6_number_constructor__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! core-js/modules/es6.number.constructor */ "./node_modules/core-js/modules/es6.number.constructor.js");
+/* harmony import */ var core_js_modules_es6_number_constructor__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es6_number_constructor__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _components_EditorImage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/EditorImage */ "./resources/backend/components/Tinymce/components/EditorImage.vue");
+/* harmony import */ var _plugins__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./plugins */ "./resources/backend/components/Tinymce/plugins.js");
+/* harmony import */ var _toolbar__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./toolbar */ "./resources/backend/components/Tinymce/toolbar.js");
+/* harmony import */ var _dynamicLoadScript__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./dynamicLoadScript */ "./resources/backend/components/Tinymce/dynamicLoadScript.js");
+/* harmony import */ var _api_upload__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/api/upload */ "./resources/backend/api/upload.js");
+
+
+
 
 
 
@@ -3377,13 +3386,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
  // why use this cdn, detail see https://github.com/PanJiaChen/tinymce-all-in-one
 
 var tinymceCDN = 'tinymce.min.js';
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Tinymce',
   components: {
-    editorImage: _components_EditorImage__WEBPACK_IMPORTED_MODULE_3__["default"]
+    editorImage: _components_EditorImage__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   props: {
     id: {
@@ -3474,7 +3484,7 @@ var tinymceCDN = 'tinymce.min.js';
       var _this3 = this;
 
       // dynamic load tinymce from cdn
-      Object(_dynamicLoadScript__WEBPACK_IMPORTED_MODULE_6__["default"])(tinymceCDN, function (err) {
+      Object(_dynamicLoadScript__WEBPACK_IMPORTED_MODULE_9__["default"])(tinymceCDN, function (err) {
         if (err) {
           _this3.$message.error(err.message);
 
@@ -3496,9 +3506,9 @@ var tinymceCDN = 'tinymce.min.js';
         height: this.height,
         body_class: 'panel-body ',
         object_resizing: false,
-        toolbar: this.toolbar.length > 0 ? this.toolbar : _toolbar__WEBPACK_IMPORTED_MODULE_5__["default"],
+        toolbar: this.toolbar.length > 0 ? this.toolbar : _toolbar__WEBPACK_IMPORTED_MODULE_8__["default"],
         menubar: this.menubar,
-        plugins: _plugins__WEBPACK_IMPORTED_MODULE_4__["default"],
+        plugins: _plugins__WEBPACK_IMPORTED_MODULE_7__["default"],
         end_container_on_empty_block: true,
         powerpaste_word_import: 'clean',
         code_dialog_height: 450,
@@ -3526,7 +3536,42 @@ var tinymceCDN = 'tinymce.min.js';
           editor.on('FullscreenStateChanged', function (e) {
             _this.fullscreen = e.state;
           });
-        } // 整合七牛上传
+        },
+        images_upload_handler: function () {
+          var _images_upload_handler = Object(_Applications_MAMP_wwwroot_CometCMS_node_modules_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_4__["default"])(
+          /*#__PURE__*/
+          _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee(blobInfo, success, failure) {
+            var res;
+            return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee$(_context) {
+              while (1) {
+                switch (_context.prev = _context.next) {
+                  case 0:
+                    _context.next = 2;
+                    return Object(_api_upload__WEBPACK_IMPORTED_MODULE_10__["upload"])(blobInfo.blob(), blobInfo.filename());
+
+                  case 2:
+                    res = _context.sent;
+
+                    if (res.code != 20000) {
+                      failure(res.message);
+                    }
+
+                    success(res.data.location);
+
+                  case 5:
+                  case "end":
+                    return _context.stop();
+                }
+              }
+            }, _callee);
+          }));
+
+          function images_upload_handler(_x, _x2, _x3) {
+            return _images_upload_handler.apply(this, arguments);
+          }
+
+          return images_upload_handler;
+        }() // 整合七牛上传
         // images_dataimg_filter(img) {
         //   setTimeout(() => {
         //     const $image = $(img);
@@ -4787,7 +4832,12 @@ var defaultFields = {
       return confirmSave;
     }(),
     handleAvatarSuccess: function handleAvatarSuccess(res, file) {
-      this.item.thumbnail = res; // this.item.thumbnail = URL.createObjectURL(file.raw);
+      if (res.code != 20000) {
+        this.$message.error(res.message);
+        return;
+      }
+
+      this.item.thumbnail = res.data.location;
     },
     beforeAvatarUpload: function beforeAvatarUpload(file) {
       if (Object(_utils_validate__WEBPACK_IMPORTED_MODULE_8__["validImage"])(file)) {
@@ -7026,7 +7076,12 @@ var defaultSlide = {
       return confirmSlide;
     }(),
     handleAvatarSuccess: function handleAvatarSuccess(res, file) {
-      this.item.image = res; // this.item.avatar = URL.createObjectURL(file.raw);
+      if (res.code != 20000) {
+        this.$message.error(res.message);
+        return;
+      }
+
+      this.item.image = res.data.location;
     },
     beforeAvatarUpload: function beforeAvatarUpload(file) {
       if (Object(_utils_validate__WEBPACK_IMPORTED_MODULE_6__["validImage"])(file)) {
@@ -7386,7 +7441,12 @@ var defaultUser = {
       return confirmUser;
     }(),
     handleAvatarSuccess: function handleAvatarSuccess(res, file) {
-      this.item.avatar = res; // this.item.avatar = URL.createObjectURL(file.raw);
+      if (res.code != 20000) {
+        this.$message.error(res.message);
+        return;
+      }
+
+      this.item.avatar = res.data.location;
     },
     beforeAvatarUpload: function beforeAvatarUpload(file) {
       if (Object(_utils_validate__WEBPACK_IMPORTED_MODULE_7__["validImage"])(file)) {
@@ -80316,8 +80376,11 @@ var render = function() {
               {
                 key: "default",
                 fn: function(scope) {
-                  return _vm._l(scope.row.categories, function(categorie) {
-                    return _c("el-tag", { key: categorie }, [
+                  return _vm._l(scope.row.categories, function(
+                    categorie,
+                    index
+                  ) {
+                    return _c("el-tag", { key: index }, [
                       _vm._v(
                         "\n                    " +
                           _vm._s(categorie.title) +
@@ -80336,8 +80399,8 @@ var render = function() {
               {
                 key: "default",
                 fn: function(scope) {
-                  return _vm._l(scope.row.tags, function(tag) {
-                    return _c("el-tag", { key: tag }, [
+                  return _vm._l(scope.row.tags, function(tag, index) {
+                    return _c("el-tag", { key: index }, [
                       _vm._v(
                         "\n                    " +
                           _vm._s(tag.name) +
@@ -87472,6 +87535,33 @@ function deleteSlide(id) {
 
 /***/ }),
 
+/***/ "./resources/backend/api/upload.js":
+/*!*****************************************!*\
+  !*** ./resources/backend/api/upload.js ***!
+  \*****************************************/
+/*! exports provided: upload */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "upload", function() { return upload; });
+/* harmony import */ var _utils_request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/utils/request */ "./resources/backend/utils/request.js");
+
+function upload(blob, name) {
+  var formData = new window.FormData();
+  formData.append('file', blob, name);
+  return Object(_utils_request__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    url: '/api/upload/file',
+    method: 'post',
+    headers: {
+      "Content-Type": 'form-data'
+    },
+    data: formData
+  });
+}
+
+/***/ }),
+
 /***/ "./resources/backend/api/user.js":
 /*!***************************************!*\
   !*** ./resources/backend/api/user.js ***!
@@ -90974,7 +91064,7 @@ function resetRouter() {
 /***/ (function(module, exports) {
 
 module.exports = {
-  title: 'Vue Admin Template',
+  title: 'Admin Platform',
 
   /**
    * @type {boolean} true | false

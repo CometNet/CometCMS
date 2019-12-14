@@ -244,8 +244,11 @@
                 })
             },
             handleAvatarSuccess(res, file) {
-                this.item.avatar = res;
-                // this.item.avatar = URL.createObjectURL(file.raw);
+                if(res.code != 20000){
+                    this.$message.error(res.message);
+                    return;
+                }
+                this.item.avatar = res.data.location;
             },
             beforeAvatarUpload(file) {
                 if(validImage(file)){

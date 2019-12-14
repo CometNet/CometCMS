@@ -25,8 +25,8 @@
             <el-table-column width="100px" align="center" label="分类">
                 <template slot-scope="scope">
                     <el-tag
-                        :key="categorie"
-                        v-for="categorie in scope.row.categories">
+                        :key="index"
+                        v-for="(categorie,index) in scope.row.categories">
                         {{categorie.title}}
                     </el-tag>
                 </template>
@@ -35,8 +35,8 @@
             <el-table-column width="200px" align="center" label="标签">
                 <template slot-scope="scope">
                     <el-tag
-                        :key="tag"
-                        v-for="tag in scope.row.tags">
+                        :key="index"
+                        v-for="(tag,index) in scope.row.tags">
                         {{tag.name}}
                     </el-tag>
                 </template>
