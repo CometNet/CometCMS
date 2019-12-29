@@ -31,6 +31,7 @@
 
 <script>
 // import { getToken } from 'api/qiniu'
+import { upload } from '@/api/upload'
 
 export default {
   name: 'EditorSlideUpload',
@@ -63,6 +64,7 @@ export default {
       this.dialogVisible = false
     },
     handleSuccess(response, file) {
+      console.log(response)
       const uid = file.uid
       const objKeyArr = Object.keys(this.listObj)
       for (let i = 0, len = objKeyArr.length; i < len; i++) {
@@ -88,12 +90,19 @@ export default {
       const _URL = window.URL || window.webkitURL
       const fileName = file.uid
       this.listObj[fileName] = {}
+      let res = upload(file,file.name);
       return new Promise((resolve, reject) => {
+        if(res.code != 20000){
+            this.$message.error(res.message);
+            return;
+        }
         const img = new Image()
-        img.src = _URL.createObjectURL(file)
+        img.src = res.data.location;
+        // img.src = _URL.createObjectURL(file)
         img.onload = function() {
           _self.listObj[fileName] = { hasSuccess: false, uid: file.uid, width: this.width, height: this.height }
         }
+        console.log(img.src)
         resolve(true)
       })
     }

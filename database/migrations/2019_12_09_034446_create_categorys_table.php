@@ -17,11 +17,11 @@ class CreateCategorysTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('parent_id')->default(0);
             $table->string('title',200);
-            $table->string('keywords',255);
-            $table->string('description',255);
+            $table->string('keywords',255)->nullable();
+            $table->string('description',255)->nullable();
             $table->tinyInteger('status')->default(1);
             $table->float('list_order')->default(10000);
-            $table->text('more');
+            $table->text('more')->nullable();
             $table->timestamps();
         });
     }

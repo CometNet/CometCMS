@@ -151,7 +151,7 @@ export default {
           })
         },
         async images_upload_handler(blobInfo, success, failure){
-            const res = await upload(blobInfo.blob(),blobInfo.filename());
+            let res = await upload(blobInfo.blob(),blobInfo.filename());
             if(res.code != 20000){
                 failure(res.message);
             }

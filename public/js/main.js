@@ -3203,14 +3203,18 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var core_js_modules_es6_array_map__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es6.array.map */ "./node_modules/core-js/modules/es6.array.map.js");
-/* harmony import */ var core_js_modules_es6_array_map__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es6_array_map__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_modules_web_dom_iterable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/web.dom.iterable */ "./node_modules/core-js/modules/web.dom.iterable.js");
-/* harmony import */ var core_js_modules_web_dom_iterable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_iterable__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_modules_es6_object_keys__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es6.object.keys */ "./node_modules/core-js/modules/es6.object.keys.js");
-/* harmony import */ var core_js_modules_es6_object_keys__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es6_object_keys__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var core_js_modules_es6_array_is_array__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es6.array.is-array */ "./node_modules/core-js/modules/es6.array.is-array.js");
-/* harmony import */ var core_js_modules_es6_array_is_array__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es6_array_is_array__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_es6_function_name__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es6.function.name */ "./node_modules/core-js/modules/es6.function.name.js");
+/* harmony import */ var core_js_modules_es6_function_name__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es6_function_name__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es6_array_map__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es6.array.map */ "./node_modules/core-js/modules/es6.array.map.js");
+/* harmony import */ var core_js_modules_es6_array_map__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es6_array_map__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_web_dom_iterable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/web.dom.iterable */ "./node_modules/core-js/modules/web.dom.iterable.js");
+/* harmony import */ var core_js_modules_web_dom_iterable__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_iterable__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es6_object_keys__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es6.object.keys */ "./node_modules/core-js/modules/es6.object.keys.js");
+/* harmony import */ var core_js_modules_es6_object_keys__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es6_object_keys__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_es6_array_is_array__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! core-js/modules/es6.array.is-array */ "./node_modules/core-js/modules/es6.array.is-array.js");
+/* harmony import */ var core_js_modules_es6_array_is_array__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es6_array_is_array__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _api_upload__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/api/upload */ "./resources/backend/api/upload.js");
+
 
 
 
@@ -3247,6 +3251,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 // import { getToken } from 'api/qiniu'
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'EditorSlideUpload',
   props: {
@@ -3288,6 +3293,7 @@ __webpack_require__.r(__webpack_exports__);
       this.dialogVisible = false;
     },
     handleSuccess: function handleSuccess(response, file) {
+      console.log(response);
       var uid = file.uid;
       var objKeyArr = Object.keys(this.listObj);
 
@@ -3311,15 +3317,24 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     beforeUpload: function beforeUpload(file) {
+      var _this3 = this;
+
       var _self = this;
 
       var _URL = window.URL || window.webkitURL;
 
       var fileName = file.uid;
       this.listObj[fileName] = {};
+      var res = Object(_api_upload__WEBPACK_IMPORTED_MODULE_5__["upload"])(file, file.name);
       return new Promise(function (resolve, reject) {
+        if (res.code != 20000) {
+          _this3.$message.error(res.message);
+
+          return;
+        }
+
         var img = new Image();
-        img.src = _URL.createObjectURL(file);
+        img.src = res.data.location; // img.src = _URL.createObjectURL(file)
 
         img.onload = function () {
           _self.listObj[fileName] = {
@@ -3330,6 +3345,7 @@ __webpack_require__.r(__webpack_exports__);
           };
         };
 
+        console.log(img.src);
         resolve(true);
       });
     }
@@ -7119,6 +7135,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+//
 //
 //
 //
@@ -83143,7 +83160,11 @@ var render = function() {
                 { attrs: { label: "生日" } },
                 [
                   _c("el-date-picker", {
-                    attrs: { type: "date", placeholder: "选择日期" },
+                    attrs: {
+                      type: "datetime",
+                      "value-format": "yyyy-MM-dd",
+                      placeholder: "选择日期"
+                    },
                     model: {
                       value: _vm.item.birthday,
                       callback: function($$v) {

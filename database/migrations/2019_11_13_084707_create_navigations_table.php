@@ -16,7 +16,7 @@ class CreateNavigationsTable extends Migration
         Schema::create('navigations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
-            $table->string('remark',255);
+            $table->string('remark',255)->nullable();
             $table->timestamps();
         });
     }

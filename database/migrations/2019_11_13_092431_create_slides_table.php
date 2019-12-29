@@ -17,7 +17,7 @@ class CreateSlidesTable extends Migration
             $table->bigIncrements('id');
             $table->tinyInteger('status')->default(1);           // 状态字段 1:显示,0不显示
             $table->string('name',60)->unique();                // 幻灯片分类
-            $table->string('remark',255)->default('');    // 分类备注
+            $table->string('remark',255)->nullable();    // 分类备注
             $table->timestamps();
         });
     }

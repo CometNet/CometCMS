@@ -98,7 +98,8 @@
                 <el-form-item label="生日">
                     <el-date-picker
                         v-model="item.birthday"
-                        type="date"
+                        type="datetime"
+                        value-format="yyyy-MM-dd"
                         placeholder="选择日期">
                     </el-date-picker>
                 </el-form-item>

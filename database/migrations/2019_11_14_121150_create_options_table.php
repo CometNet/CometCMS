@@ -21,7 +21,7 @@ class CreateOptionsTable extends Migration
             $table->bigIncrements('id');
             $table->string('option_name',64)->unique(); // 配置名称
             $table->longText('option_value');                   // 配置值
-            $table->string('description');                      // 配置描述
+            $table->string('description')->nullable();                      // 配置描述
             $table->timestamps();
         });
     }

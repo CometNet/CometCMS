@@ -54,10 +54,6 @@ class AuthController extends Controller
     }
 
     public function register(Request $request) {
-        return [
-            'code' => 20001,
-            'message' => '禁止注册!',
-        ];
         $account = $request->input('username');
         $password = $request->input('password');
         $email = $request->input('email');
@@ -70,7 +66,8 @@ class AuthController extends Controller
             'more' => ''
         ]);
         return [
-            'code' => 20000
+            'code' => 20000,
+            'message' => '注册成功!',
         ];
     }
 }
