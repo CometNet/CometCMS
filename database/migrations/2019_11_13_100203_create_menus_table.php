@@ -15,14 +15,14 @@ class CreateMenusTable extends Migration
     {
         Schema::create('menus', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('nav_id')->default(0);        // 导航 id
-            $table->integer('parent_id')->default(0);     // 父 id
-            $table->tinyInteger('status')->default(1);    // 状态;1:显示;0:隐藏
-            $table->float('list_order')->default(0);      // 排序
-            $table->string('name',50)->nullable();       // 菜单名称
-            $table->string('href',100)->nullable();      // 链接
-            $table->tinyInteger('target')->nullable();          // 打开方式
-            $table->string('icon')->nullable();                 // 图标
+            $table->integer('nav_id')->default(0)->nullable();        // 导航 id
+            $table->integer('parent_id')->default(0)->nullable();     // 父 id
+            $table->tinyInteger('status')->default(1)->nullable();    // 状态;1:显示;0:隐藏
+            $table->float('list_order')->default(0)->nullable();      // 排序
+            $table->string('name',50)->nullable();                  // 菜单名称
+            $table->string('href',100)->nullable();                 // 链接
+            $table->tinyInteger('target')->nullable();                      // 打开方式
+            $table->string('icon')->nullable();                              // 图标
             $table->timestamps();
         });
     }

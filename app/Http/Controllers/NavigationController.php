@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 use App\Models\Navigation;
 use Illuminate\Http\Request;
+use App\Http\Requests\NavigationRequest;
 
 
 class NavigationController extends Controller
@@ -34,28 +35,23 @@ class NavigationController extends Controller
     }
 
     ### RESTFul start
-    public function store(Request $request){
-        $name = $request->input('name');
-        $remark = $request->input('remark');
-        $nav = Navigation::create([
-            'name' => $name,
-            'remark' => $remark
-        ]);
+    public function store(NavigationRequest $request){
+
+        $nav = Navigation::create($request->all());
+
         return [
             'code' => 20000,
             'data' => $nav
         ];
     }
 
-    public function update(Request $request)
+    public function update(NavigationRequest $request)
     {
         $id = $request->input('id');
-        $name = $request->input('name');
-        $remark = $request->input('remark');
+
         $nav = Navigation::find($id);
-        $nav->name = $name;
-        $nav->remark = $remark;
-        if($nav->save()){
+
+        if($nav->save($request->all())){
             return ['code' => 20000];
         }else{
             return ['code' => 20001,'message' => '编辑失败'];

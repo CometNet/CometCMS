@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
-
 class AuthController extends Controller
 {
 
@@ -19,8 +18,10 @@ class AuthController extends Controller
     }
 
     public function login(Request $request) {
+
         $account = $request->input('username');
         $password = $request->input('password');
+
         if (Auth::attempt(['account' => $account, 'password' => $password])) {
             $api_token = \Str::random(60);
             $user = User::find(Auth::id());
@@ -42,7 +43,9 @@ class AuthController extends Controller
     }
 
     public function info(Request $request) {
+
         $user = User::find(Auth::id());
+
         return [
             'code' => 20000,
             'data' => [
@@ -57,13 +60,14 @@ class AuthController extends Controller
         $account = $request->input('username');
         $password = $request->input('password');
         $email = $request->input('email');
+
+
         $user = User::create([
             'name' => $account,
             'account' => $account,
             'email' => $email,
             'password' => Hash::make($password),
             'api_token' => \Str::random(60),
-            'more' => ''
         ]);
         return [
             'code' => 20000,

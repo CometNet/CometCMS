@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Slide;
 use App\Models\SlideItem;
 use Illuminate\Http\Request;
+use App\Http\Requests\SlideRequest;
 
 
 class SlideController extends Controller
@@ -20,6 +21,7 @@ class SlideController extends Controller
     }
 
     public function listClassify(Request $request) {
+        
         $page = $request->input('page');
         $limit = $request->input('limit');
         $page = $page ? $page - 1 : 0;
@@ -38,35 +40,23 @@ class SlideController extends Controller
 
 
     ### RESTFul start
-    public function store(Request $request){
-        $name = $request->input('name');
-        $remark = $request->input('remark');
-        $status = $request->input('status');
+    public function store(SlideRequest $request){
 
-        $nav = Slide::create([
-            'name' => $name,
-            'remark' => $remark,
-            'status' => $status
-        ]);
+        $nav = Slide::create($request->all());
+
         return [
             'code' => 20000,
             'data' => $nav
         ];
     }
 
-    public function update(Request $request)
+    public function update(SlideRequest $request)
     {
         $id = $request->input('id');
-        $name = $request->input('name');
-        $remark = $request->input('remark');
-        $status = $request->input('status');
 
         $nav = Slide::find($id);
-        $nav->name = $name;
-        $nav->remark = $remark;
-        $nav->status = $status;
 
-        if($nav->save()){
+        if($nav->save($request->all())){
             return ['code' => 20000];
         }else{
             return ['code' => 20001,'message' => '编辑失败'];

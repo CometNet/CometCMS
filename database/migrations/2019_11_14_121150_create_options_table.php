@@ -20,7 +20,7 @@ class CreateOptionsTable extends Migration
         Schema::create('options', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('option_name',64)->unique(); // 配置名称
-            $table->longText('option_value');                   // 配置值
+            $table->longText('option_value')->nullable();                   // 配置值
             $table->string('description')->nullable();                      // 配置描述
             $table->timestamps();
         });

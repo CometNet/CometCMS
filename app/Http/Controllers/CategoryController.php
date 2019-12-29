@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\CategoryRequest;
 
 
 class CategoryController extends Controller
@@ -34,48 +35,23 @@ class CategoryController extends Controller
     }
 
     ### RESTFul start
-    public function store(Request $request){
-        $parent_id = $request->input('parent_id');
-        $title = $request->input('title');
-        $keywords = $request->input('keywords');
-        $description = $request->input('description');
-        $status = $request->input('status');
-        $list_order = $request->input('list_order');
+    public function store(CategoryRequest $request){
 
-        $nav = Category::create([
-            'parent_id' => $parent_id,
-            'title' => $title,
-            'keywords' => $keywords,
-            'description' => $description,
-            'status' => $status,
-            'list_order' => $list_order,
-            'more' => ''
-        ]);
+        $category = Category::create($request->all());
+
         return [
             'code' => 20000,
-            'data' => $nav
+            'data' => $category
         ];
     }
 
-    public function update(Request $request)
+    public function update(CategoryRequest $request)
     {
         $id = $request->input('id');
-        $parent_id = $request->input('parent_id');
-        $title = $request->input('title');
-        $keywords = $request->input('keywords');
-        $description = $request->input('description');
-        $status = $request->input('status');
-        $list_order = $request->input('list_order');
 
-        $nav = Category::find($id);
-        $nav->parent_id = $parent_id;
-        $nav->title = $title;
-        $nav->keywords = $keywords;
-        $nav->description = $description;
-        $nav->status = $status;
-        $nav->list_order = $list_order;
+        $category = Category::find($id);
 
-        if($nav->save()){
+        if($category->save($request->all())){
             return ['code' => 20000];
         }else{
             return ['code' => 20001,'message' => '编辑失败'];

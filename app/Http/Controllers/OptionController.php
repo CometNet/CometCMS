@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 use App\Models\Option;
 use Illuminate\Http\Request;
+use App\Http\Requests\OptionRequest;
 
 
 class OptionController extends Controller
@@ -35,35 +36,22 @@ class OptionController extends Controller
     }
 
     ### RESTFul start
-    public function store(Request $request){
-        $option_name = $request->input('option_name');
-        $option_value = $request->input('option_value');
-        $description = $request->input('description');
+    public function store(OptionRequest $request){
 
-        $nav = Option::create([
-            'option_name' => $option_name,
-            'option_value' => $option_value,
-            'description' => $description
-        ]);
+        $nav = Option::create($request->all());
         return [
             'code' => 20000,
             'data' => $nav
         ];
     }
 
-    public function update(Request $request)
+    public function update(OptionRequest $request)
     {
         $id = $request->input('id');
-        $option_name = $request->input('option_name');
-        $option_value = $request->input('option_value');
-        $description = $request->input('description');
 
-        $nav = Option::find($id);
-        $nav->option_name = $option_name;
-        $nav->option_value = $option_value;
-        $nav->description = $description;
+        $option = Option::find($id);
 
-        if($nav->save()){
+        if($option->save($request->all())){
             return ['code' => 20000];
         }else{
             return ['code' => 20001,'message' => '编辑失败'];
@@ -72,8 +60,9 @@ class OptionController extends Controller
 
     public function destroy($id)
     {
-        $nav = Option::find($id);
-        if($nav->delete()){
+        $option = Option::find($id);
+
+        if($option->delete()){
             return [
                 'code' => 20000
             ];

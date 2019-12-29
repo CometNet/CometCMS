@@ -4,13 +4,14 @@
 namespace App\Http\Controllers;
 use App\Models\Menu;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\MenuRequest;
 
 
 class MenuController extends Controller
 {
 
     public function list(Request $request) {
+
         $navid = $request->input('navid');
         $page = $request->input('page');
         $limit = $request->input('limit');
@@ -33,56 +34,22 @@ class MenuController extends Controller
     }
 
     ### RESTFul start
-    public function store(Request $request){
-        $name = $request->input('name');
-        $nav_id = $request->input('nav_id');
-        $parent_id = $request->input('parent_id');
-        $status = $request->input('status');
-        $list_order = $request->input('list_order');
-        $href = $request->input('href');
-        $target = $request->input('target');
-        $icon = $request->input('icon');
+    public function store(MenuRequest $request){
 
-
-        $menu = Menu::create([
-            'name' => $name,
-            'nav_id' => $nav_id,
-            'parent_id' => $parent_id,
-            'status' => $status,
-            'list_order' => $list_order,
-            'href' => $href,
-            'target' => $target,
-            'icon' => $icon,
-        ]);
+        $menu = Menu::create($request->all());
         return [
             'code' => 20000,
             'data' => $menu
         ];
     }
 
-    public function update(Request $request)
+    public function update(MenuRequest $request)
     {
         $id = $request->input('id');
-        $name = $request->input('name');
-        $nav_id = $request->input('nav_id');
-        $parent_id = $request->input('parent_id');
-        $status = $request->input('status');
-        $list_order = $request->input('list_order');
-        $href = $request->input('href');
-        $target = $request->input('target');
-        $icon = $request->input('icon');
 
-        $nav = Menu::find($id);
-        $nav->name = $name;
-        $nav->nav_id = $nav_id;
-        $nav->parent_id = $parent_id;
-        $nav->status = $status;
-        $nav->list_order = $list_order;
-        $nav->href = $href;
-        $nav->target = $target;
-        $nav->icon = $icon;
+        $menu = Menu::find($id);
 
-        if($nav->save()){
+        if($menu->save($request->all())){
             return ['code' => 20000];
         }else{
             return ['code' => 20001,'message' => '编辑失败'];
