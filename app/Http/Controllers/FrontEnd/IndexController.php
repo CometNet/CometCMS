@@ -18,7 +18,6 @@ class IndexController extends Controller
 
         // 分类
         if($category){
-
             $where = [
                 'posts.type'       => 0,
                 'posts.status'     => 1,
