@@ -2,7 +2,7 @@
 
 
 namespace App\Http\Controllers;
-use App\Models\Slide;
+
 use App\Models\SlideItem;
 use Illuminate\Http\Request;
 use App\Http\Requests\SlideItemRequest;
@@ -14,11 +14,11 @@ class SlideItemController extends Controller
     ### RESTFul start
     public function store(SlideItemRequest $request){
 
-        $nav = SlideItem::create($request->all());
+        $slide = SlideItem::create($request->all());
 
         return [
             'code' => 20000,
-            'data' => $nav
+            'data' => $slide
         ];
     }
 
@@ -60,17 +60,17 @@ class SlideItemController extends Controller
         $limit = $limit ? $limit : 10;
 
         if($slide_id > 0){
-            $navArr = SlideItem::where(['slide_id' => $slide_id])->offset($page)->limit($limit)->get();
+            $slideArr = SlideItem::where(['slide_id' => $slide_id])->offset($page)->limit($limit)->get();
             $total = SlideItem::where(['slide_id' => $slide_id])->count();
         }else{
-            $navArr = SlideItem::offset($page)->limit($limit)->get();
+            $slideArr = SlideItem::offset($page)->limit($limit)->get();
             $total = SlideItem::count();
         }
         return [
             'code' => 20000,
             'data' => [
                 'total' => $total,
-                'items' => $navArr,
+                'items' => $slideArr,
             ]];
     }
 }
